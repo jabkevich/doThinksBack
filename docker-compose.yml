@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  web:
+    build: doThinksBack/
+    restart: always
+    command: gunicorn django_project.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
